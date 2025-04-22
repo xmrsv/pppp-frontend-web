@@ -1,0 +1,81 @@
+---
+import DashboardLayout from "../layouts/DashboardLayout.astro";
+
+const tasks = [
+  {
+    id: 0,
+    name: "Inicio: Comunicación recibida",
+    completed: true,
+  },
+  {
+    id: 1,
+    name: "Carta presentación: Emitida",
+    completed: true,
+  },
+  {
+    id: 2,
+    name: "Carta aceptación empresa: Recibida",
+    completed: true,
+  },
+  {
+    id: 3,
+    name: "Convenio: Recibido",
+    completed: true,
+  },
+  {
+    id: 4,
+    name: "Carpeta OneDrive: Creada",
+    completed: true,
+  },
+  {
+    id: 5,
+    name: "Informe(s) parcial(es)/Seguimiento: Recibido(s)",
+    completed: false,
+  },
+  {
+    id: 6,
+    name: "Informe final: Recibido",
+    completed: false,
+  },
+  {
+    id: 7,
+    name: "Certificado Empresa: Recibido",
+    completed: false,
+  },
+  {
+    id: 8,
+    name: "Listo para validación SA",
+    completed: false,
+  },
+  {
+    id: 9,
+    name: "Validado por secretaria académica",
+    completed: false,
+  },
+  {
+    id: 10,
+    name: "Certificado de prácticas pre profesionales",
+    completed: false,
+  }
+];
+---
+
+<DashboardLayout>
+  <h1>Vista detallada</h1>
+  <h2>Juanito Perez</h2>
+
+  <!-- checklist using disabled checkboxes -->
+
+  <ul>
+    {
+      tasks.map((task) => {
+        return (
+          <li>
+            <input type="checkbox" disabled checked={task.completed} />
+            <label>{task.name}</label>
+          </li>
+        );
+      })
+    }
+  </ul>
+</DashboardLayout>

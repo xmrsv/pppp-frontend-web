@@ -1,16 +1,60 @@
 ---
+import DashboardLayout from "../layouts/DashboardLayout.astro";
+
+const tracks = [{
+	id: 0,
+	student_name: "Ana García",
+	university_code: "2021001",
+	company: "Tech Solutions",
+	status: "En Progreso (Docs Iniciales OK)",
+	start_date: "15/03/2024",
+}, {
+	id: 1,
+	student_name: "Carlos Pérez",
+	university_code: "2020050",
+	company: "Innovatech",
+	status: "Pendiente Docs Empresa",
+	start_date: "01/04/2024",
+}, {
+	id: 2,
+	student_name: "María López",
+	university_code: "2021003",
+	company: "Global Corp",
+	status: "En Progreso (Docs Iniciales OK)",
+	start_date: "25/03/2024",
+}, {
+	id: 3,
+	student_name: "Carlos Fernández",
+	university_code: "2021004",
+	company: "Tech Innovators",
+	status: "En Progreso (Docs Iniciales OK)",
+	start_date: "30/03/2024",
+}]
 
 ---
+<DashboardLayout>
+	<h1>Seguimiento de practicas pre profesionales</h1>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+	<!-- Table with column: Nombre del estudiante, Código universitario, Empresa, Estado, Fecha de inicio -->
+	<table>
+		<thead>
+			<tr>
+				<th>Nombre del estudiante</th>
+				<th>Código universitario</th>
+				<th>Empresa</th>
+				<th>Estado</th>
+				<th>Fecha de inicio</th>
+			</tr>
+		</thead>
+		<tbody>
+			{tracks.map((track) => (
+				<tr>
+					<td>{track.student_name}</td>
+					<td>{track.university_code}</td>
+					<td>{track.company}</td>
+					<td>{track.status}</td>
+					<td>{track.start_date}</td>
+				</tr>
+			))}
+		</tbody>
+</DashboardLayout>
