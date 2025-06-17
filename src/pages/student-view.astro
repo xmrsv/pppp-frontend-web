@@ -1,81 +1,54 @@
 ---
 import DashboardLayout from "../layouts/DashboardLayout.astro";
 
+// --- NUEVA LISTA DE TAREAS ---
+// Aquí definimos las tareas con el contenido que solicitaste.
+// He dejado algunas como 'completed: true' para el ejemplo.
 const tasks = [
-  {
-    id: 0,
-    name: "Inicio: Comunicación recibida",
-    completed: true,
-  },
-  {
-    id: 1,
-    name: "Carta presentación: Emitida",
-    completed: true,
-  },
-  {
-    id: 2,
-    name: "Carta aceptación empresa: Recibida",
-    completed: true,
-  },
-  {
-    id: 3,
-    name: "Convenio: Recibido",
-    completed: true,
-  },
-  {
-    id: 4,
-    name: "Carpeta OneDrive: Creada",
-    completed: true,
-  },
-  {
-    id: 5,
-    name: "Informe(s) parcial(es)/Seguimiento: Recibido(s)",
-    completed: false,
-  },
-  {
-    id: 6,
-    name: "Informe final: Recibido",
-    completed: false,
-  },
-  {
-    id: 7,
-    name: "Certificado Empresa: Recibido",
-    completed: false,
-  },
-  {
-    id: 8,
-    name: "Listo para validación SA",
-    completed: false,
-  },
-  {
-    id: 9,
-    name: "Validado por secretaria académica",
-    completed: false,
-  },
-  {
-    id: 10,
-    name: "Certificado de prácticas pre profesionales",
-    completed: false,
-  },
+  { id: 0, name: "Solicitar carta de presentación", completed: true },
+  { id: 1, name: "Emitir carta de presentación", completed: true },
+  { id: 2, name: "Emitir carta de aceptación", completed: false },
+  { id: 3, name: "Crear carpeta", completed: false },
+  { id: 4, name: "Subir documentos", completed: false },
+  { id: 5, name: "Emitir constancias de prácticas", completed: false },
 ];
 ---
 
 <DashboardLayout>
-  <h1>Vista detallada</h1>
+  <h1>Vista Detallada del Proceso</h1>
   <h2>Juanito Perez</h2>
 
-  <!-- checklist using disabled checkboxes -->
-
-  <ul>
+  <ul id="task-list" class="task-list-container">
     {
-      tasks.map((task) => {
-        return (
-          <li>
-            <input type="checkbox" disabled checked={task.completed} />
-            <label>{task.name}</label>
-          </li>
-        );
-      })
+      tasks.map((task) => (
+        <li class={task.completed ? "completed" : ""}>
+          <input type="checkbox" id={`task-${task.id}`} checked={task.completed} />
+          <label for={`task-${task.id}`}>{task.name}</label>
+        </li>
+      ))
     }
   </ul>
 </DashboardLayout>
+
+<script>
+  // El script para la interactividad no necesita cambios.
+  // Se ejecutará cuando el DOM esté listo para asegurar que todos los elementos existan.
+  document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('#task-list input[type="checkbox"]');
+
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', (event) => {
+        const checkboxElement = event.target as HTMLInputElement;
+        const listItem = checkboxElement.closest('li');
+
+        if (listItem) {
+          if (checkboxElement.checked) {
+            listItem.classList.add('completed');
+          } else {
+            listItem.classList.remove('completed');
+          }
+        }
+      });
+    });
+  });
+</script>

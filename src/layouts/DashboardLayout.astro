@@ -1,11 +1,11 @@
 ---
 import "../styles/main.scss";
-import "@fontsource/lato"
+import "@fontsource/lato";
 import Header from "../components/Header.astro";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -13,10 +13,12 @@ import Header from "../components/Header.astro";
       content="Practicas pre profesionales - Prototipo"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PPP | Prototype</title>
+    <title>PPP | Seguimiento</title>
   </head>
   <body>
     <Header />
-    <slot />
+    <main class="main-container">
+      <slot />
+    </main>
   </body>
-</html>
+</html> 
