@@ -1,11 +1,11 @@
-enum EnumTaskStatus {
+export enum EnumTaskStatus {
   PENDING = "PENDING",
   IN_PROGRESS = "IN_PROGRESS",
   COMPLETED = "COMPLETED",
   CANCELLED = "CANCELLED",
 }
 
-interface Task {
+export interface Task {
   id: number;
   title: string;
   description: string;

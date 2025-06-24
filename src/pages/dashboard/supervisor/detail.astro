@@ -1,0 +1,63 @@
+---
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+import { getPracticumById } from "../../../modules/practicums/practicums.module";
+
+const paramId = Astro.url.searchParams.get("id");
+
+if (!paramId) {
+  Astro.redirect("/dashboard/supervisor");
+}
+
+const selectedPracticum = getPracticumById(parseInt(paramId, 10));
+---
+
+<DashboardLayout>
+  <a href="/dashboard/supervisor">Volver</a>
+
+  {
+    selectedPracticum ? (
+      <div class="container">
+        <h1>Detalle de la Práctica</h1>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Campo</th>
+              <th scope="col">Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Estudiante</td>
+              <td>{selectedPracticum.student.fullName}</td>
+            </tr>
+            <tr>
+              <td>Empresa</td>
+              <td>{selectedPracticum.company.name}</td>
+            </tr>
+            <tr>
+              <td>Fecha de inicio</td>
+              <td>
+                {selectedPracticum.startDate.toLocaleDateString("es", {
+                  timeZone: "America/Lima",
+                  dateStyle: "full",
+                })}
+              </td>
+            </tr>
+            <tr>
+              <td>Horas</td>
+              <td>{selectedPracticum.hours}</td>
+            </tr>
+            <tr>
+              <td>Estado</td>
+              <td>{selectedPracticum.status}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    ) : (
+      <div class="container">
+        <h2>No se encontró la práctica.</h2>
+      </div>
+    )
+  }
+</DashboardLayout>

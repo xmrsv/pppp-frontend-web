@@ -3,10 +3,73 @@ import Header from "../../components/Header.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
+<style lang="scss">
+  header {
+    display: flex;
+    justify-content: space-between;
+    background-color: hsl(0, 0%, 30%);
+    color: hsl(0, 0%, 90%);
+    padding: 1.5rem 2rem;
+    margin: auto;
+    margin-bottom: 1rem;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      font-weight: 900;
+    }
+  }
+
+  .container {
+    max-width: 40rem;
+    margin: auto;
+    padding: 1rem;
+  }
+
+  .grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    a {
+      max-width: 300px;
+      aspect-ratio: 1/1;
+      display: block;
+      text-decoration: none;
+      border: 1px solid hsl(0, 0%, 30%);
+      color: inherit;
+      padding: 1rem;
+    }
+  }
+</style>
+
 <BaseLayout title="dashboard">
+  <div class="container">
+    <header>
+      <p>Bienvenid@ <span id="username-label" data-user-name></span></p>
+      <a href="/auth/logout">Cerrar sesión</a>
+    </header>
 
-    <Header>
-        asd
-    </Header>
+    <div class="grid-container">
+      <a id="supervisor-view" href="/dashboard/supervisor" data-role="Supervisor,Admin">
+        Vista de supervisor
+      </a>
 
+      <a id="student-view" href="/dashboard/student" data-role="Student,Admin">
+        Vista de estudiante
+      </a>
+    </div>
+  </div>
 </BaseLayout>
+
+<script>
+  import { getAuthState, requireAuth, initializeAuthUI } from "../../utils/auth.util";
+
+  // Verificar autenticación
+  if (!requireAuth()) {
+    // requireAuth ya redirige al login si no está autenticado
+  } else {
+    // Inicializar UI basada en autenticación
+    initializeAuthUI();
+  }
+</script>

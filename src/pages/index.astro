@@ -10,33 +10,5 @@ const tracks = [
 ---
 
 <DashboardLayout>
-  <h1>Seguimiento de Prácticas</h1>
-  <p>Vista general del estado de los estudiantes.</p>
-
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Nombre del estudiante</th>
-          <th>Código universitario</th>
-          <th>Empresa</th>
-          <th>Estado</th>
-          <th>Fecha de inicio</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          tracks.map((track) => (
-            <tr>
-              <td>{track.student_name}</td>
-              <td>{track.university_code}</td>
-              <td>{track.company}</td>
-              <td><span class={`status-badge status-${track.status.toLowerCase().replace(' ', '-')}`}>{track.status}</span></td>
-              <td>{track.start_date}</td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </div>
+<h1>hello</h1>
 </DashboardLayout>

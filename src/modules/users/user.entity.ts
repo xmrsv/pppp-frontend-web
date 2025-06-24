@@ -1,4 +1,7 @@
-interface User {
+import type { Role } from "../roles/role.entity";
+import type { Practicum } from "../practicums/practicum.entity";
+
+export interface User {
   id: number;
   studentCode: string;
   documentNumber: string;

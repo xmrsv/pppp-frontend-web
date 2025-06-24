@@ -1,0 +1,156 @@
+---
+import Header from "../../../components/Header.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+---
+
+<style lang="scss">
+  .container {
+    max-width: 80rem;
+    margin: auto;
+    padding: 2rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid hsl(0, 0%, 80%);
+    }
+    
+    th {
+      background-color: hsl(0, 0%, 95%);
+      font-weight: bold;
+    }
+    
+    tr:hover {
+      background-color: hsl(0, 0%, 98%);
+    }
+  }
+
+  .status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    
+    &.pending {
+      background-color: hsl(45, 100%, 90%);
+      color: hsl(45, 100%, 30%);
+    }
+    
+    &.approved {
+      background-color: hsl(120, 100%, 90%);
+      color: hsl(120, 100%, 25%);
+    }
+    
+    &.rejected {
+      background-color: hsl(0, 100%, 90%);
+      color: hsl(0, 100%, 30%);
+    }
+  }
+
+  .no-practicums {
+    text-align: center;
+    padding: 3rem;
+    color: hsl(0, 0%, 60%);
+    font-style: italic;
+  }
+</style>
+
+<BaseLayout title="Student View - Mis Prácticas">
+  <Header />
+  <div class="container">
+    <h1>Mis Prácticas</h1>
+    
+    <div id="practicums-container">
+      <div class="no-practicums">
+        Cargando tus prácticas...
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { getPracticumsByStudentId, getPracticums } from "../../../modules/practicums/practicums.module";
+  import { getAuthState, requireRole } from "../../../utils/auth.util";
+
+  // Verificar que el usuario tenga el rol de estudiante o admin
+  if (!requireRole(["Student", "Admin"])) {
+    // requireRole ya redirige si no tiene permisos
+  } else {
+    const container = document.getElementById("practicums-container");
+    const auth = getAuthState();
+    
+    if (auth.user && container) {
+      let studentPracticums;
+      
+      // Si es admin, mostrar todas las prácticas; si es estudiante, solo las suyas
+      if (auth.isAdmin) {
+        studentPracticums = getPracticums();
+        container.innerHTML = `<h2>Vista de Administrador - Todas las Prácticas</h2>` + container.innerHTML;
+      } else {
+        studentPracticums = getPracticumsByStudentId(auth.user.id);
+      }
+      
+      if (studentPracticums.length === 0) {
+        container.innerHTML = `
+          <div class="no-practicums">
+            ${auth.isAdmin ? 'No hay prácticas registradas en el sistema.' : 'No tienes prácticas asignadas actualmente.'}
+          </div>
+        `;
+      } else {
+        // Crear tabla con las prácticas
+        container.innerHTML = `
+          ${auth.isAdmin ? '<h2>Vista de Administrador - Todas las Prácticas</h2>' : ''}
+          <table>
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Empresa</th>
+                ${auth.isAdmin ? '<th>Estudiante</th>' : ''}
+                <th>Fecha de Inicio</th>
+                <th>Horas</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${studentPracticums.map(practicum => `
+                <tr>
+                  <td>${practicum.title}</td>
+                  <td>${practicum.description}</td>
+                  <td>${practicum.company.name}</td>
+                  ${auth.isAdmin ? `<td>${practicum.student.fullName}</td>` : ''}
+                  <td>${new Date(practicum.startDate).toLocaleDateString("es", {
+                    timeZone: "America/Lima",
+                    dateStyle: "long"
+                  })}</td>
+                  <td>${practicum.hours} horas</td>
+                  <td>
+                    <span class="status ${practicum.status.toLowerCase()}">
+                      ${practicum.status === 'PENDING' ? 'Pendiente' : 
+                        practicum.status === 'APPROVED' ? 'Aprobado' : 'Rechazado'}
+                    </span>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+    } else {
+      // Si no hay usuario logueado, redirigir al login
+      if (container) {
+        container.innerHTML = `
+          <div class="no-practicums">
+            No has iniciado sesión. <a href="/auth/login">Iniciar sesión</a>
+          </div>
+        `;
+      }
+    }
+  }
+</script>

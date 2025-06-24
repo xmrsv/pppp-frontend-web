@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Cerrando sesión...">
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <p>Cerrando sesión...</p>
+  </div>
+</BaseLayout>
+
+<script>
+  import { clearAuthUser } from "../../utils/auth.util";
+  
+  // Limpiar datos de autenticación
+  clearAuthUser();
+  
+  // Redirigir al login
+  window.location.href = "/auth/login";
+</script>

@@ -1,0 +1,137 @@
+---
+import Header from "../../../components/Header.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+---
+
+<style lang="scss">
+  .container {
+    max-width: 80rem;
+    margin: auto;
+    padding: 2rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid hsl(0, 0%, 80%);
+    }
+    
+    th {
+      background-color: hsl(0, 0%, 95%);
+      font-weight: bold;
+    }
+    
+    tr:hover {
+      background-color: hsl(0, 0%, 98%);
+    }
+  }
+
+  .status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    
+    &.pending {
+      background-color: hsl(45, 100%, 90%);
+      color: hsl(45, 100%, 30%);
+    }
+    
+    &.approved {
+      background-color: hsl(120, 100%, 90%);
+      color: hsl(120, 100%, 25%);
+    }
+    
+    &.rejected {
+      background-color: hsl(0, 100%, 90%);
+      color: hsl(0, 100%, 30%);
+    }
+  }
+
+  .no-practicums {
+    text-align: center;
+    padding: 3rem;
+    color: hsl(0, 0%, 60%);
+    font-style: italic;
+  }
+</style>
+
+<BaseLayout title="Supervisor View - Seguimiento General">
+  <Header />
+  <div class="container">
+    <h1>Seguimiento General de Prácticas</h1>
+    
+    <div id="practicums-container">
+      <div class="no-practicums">
+        Cargando prácticas...
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { getPracticums } from "../../../modules/practicums/practicums.module";
+  import { requireRole } from "../../../utils/auth.util";
+
+  // Verificar que el usuario tenga el rol de supervisor o admin
+  if (!requireRole(["Supervisor", "Admin"])) {
+    // requireRole ya redirige si no tiene permisos
+  } else {
+    const container = document.getElementById("practicums-container");
+    
+    if (container) {
+      const allPracticums = getPracticums();
+      
+      if (allPracticums.length === 0) {
+        container.innerHTML = `
+          <div class="no-practicums">
+            No hay prácticas registradas actualmente.
+          </div>
+        `;
+      } else {
+        // Crear tabla con todas las prácticas
+        container.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>Estudiante</th>
+                <th>Empresa</th>
+                <th>Fecha de inicio</th>
+                <th>Horas</th>
+                <th>Estado</th>
+                <th>Ver</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${allPracticums.map(practicum => `
+                <tr>
+                  <td>${practicum.student.fullName}</td>
+                  <td>${practicum.company.name}</td>
+                  <td>${new Date(practicum.startDate).toLocaleDateString("es", {
+                    timeZone: "America/Lima",
+                    dateStyle: "full"
+                  })}</td>
+                  <td>${practicum.hours} horas</td>
+                  <td>
+                    <span class="status ${practicum.status.toLowerCase()}">
+                      ${practicum.status === 'PENDING' ? 'Pendiente' : 
+                        practicum.status === 'APPROVED' ? 'Aprobado' : 'Rechazado'}
+                    </span>
+                  </td>
+                  <td>
+                    <a href="/dashboard/supervisor/detail?id=${practicum.id}">Ver</a>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+    }
+  }
+</script>

@@ -23,9 +23,24 @@
 
 <header>
   <nav>
-    <ul>
-      <li><a href="/">Seguimiento General</a></li>
-      <li><a href="/student-view">Vista Estudiante</a></li>
+    <ul id="nav-items">
+      <!-- Los elementos se generarán dinámicamente -->
     </ul>
   </nav>
 </header>
+
+<script>
+  import { getNavigationItems, initializeAuthUI } from "../utils/auth.util";
+
+  // Generar elementos de navegación dinámicamente
+  const navItems = document.getElementById('nav-items');
+  if (navItems) {
+    const items = getNavigationItems();
+    navItems.innerHTML = items.map(item => 
+      `<li><a href="${item.href}">${item.text}</a></li>`
+    ).join('');
+  }
+
+  // Inicializar UI basada en autenticación
+  initializeAuthUI();
+</script>

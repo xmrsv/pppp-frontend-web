@@ -1,6 +1,8 @@
-interface Role {
+import type { User } from "../users/user.entity";
+
+export interface Role {
   id: number;
   name: string;
-  description: string;
-  users: User[];
+  description: string | null;
+  users: User[] | null;
 }
