@@ -1,24 +1,11 @@
 ---
 import "../styles/main.scss";
-import "@fontsource/lato";
 import Header from "../components/Header.astro";
+import BaseLayout from "./BaseLayout.astro";
 ---
-
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="description"
-      content="Practicas pre profesionales - Prototipo"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PPP | Seguimiento</title>
-  </head>
-  <body>
+<BaseLayout title="Dashboard">
     <Header />
-    <main class="main-container">
-      <slot />
+    <main class="dashboard">
+        <slot />
     </main>
-  </body>
-</html> 
+</BaseLayout>

@@ -1,0 +1,102 @@
+---
+import PrimaryButton from "../../components/PrimaryButton.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/main.scss";
+---
+
+<style lang="scss">
+  $padding-s: 0.5rem;
+  $padding-m: 1rem;
+  $padding-l: 2rem;
+
+  body {
+    background-color: hsl(0, 0%, 90%);
+    display: grid;
+    place-items: center;
+    height: 100dvh;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 2rem;
+      border-radius: $padding-s;
+      background-color: hsl(0, 0%, 100%);
+
+      input[type="text"],
+      input[type="password"] {
+        padding: $padding-s;
+        border: 1px solid hsl(0, 0%, 80%);
+        border-radius: 0.25rem;
+        font: inherit;
+      }
+
+      button {
+        font: inherit;
+        padding: $padding-s;
+        display: block;
+        border: none;
+        background-color: hsl(221, 83%, 53%);
+        color: hsl(0, 0%, 100%);
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+</style>
+
+<BaseLayout title="Register">
+  <form action="">
+    <h1>Registrarse</h1>
+
+    <div>
+      <input type="text" name="username" id="username" placeholder="Usuario" />
+    </div>
+
+    <div>
+      <input type="text" name="studentCode" id="studentCode" placeholder="Código universitario" />
+    </div>
+
+    <div>
+      <input type="text" name="documentNumber" id="documentNumber" placeholder="DNI" />
+    </div>
+
+    <div>
+      <input type="text" name="username" id="username" placeholder="Usuario" />
+    </div>
+
+    <div>
+      <input type="text" name="fullname" id="fullname" placeholder="Nombre completo" />
+    </div>
+
+    <div>
+      <input type="text" name="email" id="email" placeholder="Correo electrónico" />
+    </div>
+
+    <div>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Contraseña"
+      />
+    </div>
+    <div>
+      <input
+        type="password"
+        name="repassword"
+        id="repassword"
+        placeholder="Repite contraseña"
+      />
+    </div>
+
+    <PrimaryButton>
+      Registrarse
+    </PrimaryButton>
+
+    <a href="/auth/login">Ya tengo una cuenta</a>
+
+  </form>
+</BaseLayout>

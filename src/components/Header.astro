@@ -1,8 +1,31 @@
-<header class="site-header">
-    <nav class="main-nav">
-      <ul>
-        <li><a href="/">Seguimiento General</a></li>
-        <li><a href="/student-view">Vista Estudiante</a></li>
-      </ul>
-    </nav>
-  </header>
+<style lang="scss">
+  nav {
+    background-color: hsl(221, 94%, 13%);
+    padding: 1rem;
+
+    color: hsl(0, 0%, 100%);
+
+    ul {
+      max-width: fit-content;
+      gap: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      list-style: none;
+      li {
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+</style>
+
+<header>
+  <nav>
+    <ul>
+      <li><a href="/">Seguimiento General</a></li>
+      <li><a href="/student-view">Vista Estudiante</a></li>
+    </ul>
+  </nav>
+</header>

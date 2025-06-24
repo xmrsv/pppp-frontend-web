@@ -1,0 +1,18 @@
+<style lang="scss">
+  button {
+    font: inherit;
+    padding: 0.5rem;
+    display: block;
+    border: none;
+    background-color: hsl(221, 83%, 53%);
+    color: hsl(0, 0%, 100%);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+</style>
+
+<button>
+  <slot />
+</button>
