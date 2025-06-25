@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/vercel": "^8.2.0",
     "@fontsource-variable/ibm-plex-sans": "^5.2.6",
     "@fontsource/lato": "^5.2.5",
     "astro": "^5.7.4",
