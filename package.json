@@ -12,7 +12,7 @@
     "@astrojs/vercel": "^8.2.0",
     "@fontsource-variable/ibm-plex-sans": "^5.2.6",
     "@fontsource/lato": "^5.2.5",
-    "astro": "^5.7.4",
+    "astro": "^5.16.1",
     "sass": "^1.87.0"
   }
 }
